@@ -2,66 +2,12 @@
 /* Import Modules */
 /******************/
 
+const { request } = require('express')
 const express = require('express')
 const app = express()
 
-// TODO: Move to local module
-/*********************/
-/* Define data array */
-/*********************/
+const guild = require('./guild')
 
-const guild = [
-  // Item 1
-  {
-    // general
-    id: 1,
-    name: 'harry',
-    class: 'wizard',
-    race: 'elf',
-    // stats
-    strength: 16,
-    dexterity: 14,
-    constitution: 12,
-    intelligence: 14,
-    wisdom: 16,
-    charisma: 10,
-    // Modifiers
-    poisoned: false
-  },
-  // Item 2
-  {
-    // general
-    id: 2,
-    name: 'ryan',
-    class: 'bard',
-    race: 'human',
-    // stats
-    strength: 12,
-    dexterity: 16,
-    constitution: 14,
-    intelligence: 6,
-    wisdom: 10,
-    charisma: 20,
-    // Modifiers
-    poisoned: true
-  },
-  {
-    // general
-    id: 3,
-    name: 'spry',
-    class: 'rogue',
-    race: 'elf',
-    // stats
-    strength: 6,
-    dexterity: 18,
-    constitution: 10,
-    intelligence: 18,
-    wisdom: 14,
-    charisma: 8,
-    // Modifiers
-    poisoned: false
-  }
-];
 
 /*****************/
 /* Define routes */
@@ -69,7 +15,7 @@ const guild = [
 
 // List entry route
 app.get('/api/guild', function(request, response) {
-  // TODO: validate `guild` before sending
+  
   if (typeof guild !== 'undefined' && Array.isArray(guild)) {
     // Variable is an array!
     response.send(guild)
@@ -81,10 +27,13 @@ app.get('/api/guild', function(request, response) {
 
 // Item route
 app.get('/api/guild/:name', function(request, response) {
-  // TODO: Validate when 
-
-  const character = guild.find(item => request.params.name === item.name);
-   // Use Array.find() here
+  let character
+  
+  if (typeof guild !== 'undefined' && Array.isArray(guild)) {
+    character = guild.find(item => request.params.name === item.name);
+  } else{
+    character= null
+  }
   if(typeof character === 'object' && character !== null){
   response.send(character)
   }else {
