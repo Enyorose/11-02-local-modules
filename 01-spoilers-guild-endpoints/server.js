@@ -86,11 +86,8 @@ app.get('/api/guild/:name', function(request, response) {
   const character = guild.find(function(item){
     
     // TODO: Optimize our expression
-    if (request.params.name === item.name) {
-      return true
-    } else {
-      return false
-    }
+    request.params.name === item.name
+    
   }); // Use Array.find() here
   if(typeof character === 'object' && character !== null){
   response.send(character)
