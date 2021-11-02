@@ -83,12 +83,8 @@ app.get('/api/guild', function(request, response) {
 app.get('/api/guild/:name', function(request, response) {
   // TODO: Validate when 
 
-  const character = guild.find(function(item){
-    
-    // TODO: Optimize our expression
-    request.params.name === item.name
-    
-  }); // Use Array.find() here
+  const character = guild.find(item => request.params.name === item.name);
+   // Use Array.find() here
   if(typeof character === 'object' && character !== null){
   response.send(character)
   }else {
